@@ -32,7 +32,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
           <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-500 text-lg font-black text-white shadow-sm">
             AI
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">私有图片工作台</h1>
+          <h1 className="text-2xl font-bold tracking-tight">image2工作台</h1>
           <p className="mt-2 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
             请使用管理员分配的账号登录。登录后会自动加载该账号对应的 API 配置。
           </p>

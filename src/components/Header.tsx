@@ -161,12 +161,12 @@ export default function Header({ privateAccountName, agentEnabled, onLogout }: H
                 <>
                   <span className="min-w-0 truncate text-[17px] font-bold tracking-tight text-gray-800 dark:text-gray-100 sm:hidden" title={favoriteCollectionTitle}>{favoriteCollectionTitle}</span>
                   <span className="hidden text-lg font-bold tracking-tight text-gray-800 dark:text-gray-100 sm:inline">
-                    私有图片工作台
+                    image2工作台
                   </span>
                 </>
               ) : (
                 <span className="text-[17px] sm:text-lg font-bold tracking-tight text-gray-800 dark:text-gray-100">
-                  私有图片工作台
+                  image2工作台
                 </span>
               )}
               {hasUpdate && latestRelease && (
