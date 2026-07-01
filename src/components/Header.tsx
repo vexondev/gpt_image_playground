@@ -15,6 +15,7 @@ type BeforeInstallPromptEvent = Event & {
 
 interface HeaderProps {
   privateAccountName: string
+  agentEnabled: boolean
   onLogout: () => void
 }
 
@@ -23,7 +24,7 @@ function isInstalledPwa() {
   return window.matchMedia('(display-mode: standalone)').matches || nav.standalone === true
 }
 
-export default function Header({ privateAccountName, onLogout }: HeaderProps) {
+export default function Header({ privateAccountName, agentEnabled, onLogout }: HeaderProps) {
   const appMode = useStore((s) => s.appMode)
   const setAppMode = useStore((s) => s.setAppMode)
   const setShowSettings = useStore((s) => s.setShowSettings)
@@ -231,7 +232,7 @@ export default function Header({ privateAccountName, onLogout }: HeaderProps) {
               </div>
             </div>
           )}
-          <div className="hidden sm:flex items-center gap-1 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-gray-100/70 dark:bg-white/[0.04] p-1 mr-4">
+          {agentEnabled && <div className="hidden sm:flex items-center gap-1 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-gray-100/70 dark:bg-white/[0.04] p-1 mr-4">
             <button
               type="button"
               onClick={() => setAppMode('gallery')}
@@ -246,7 +247,7 @@ export default function Header({ privateAccountName, onLogout }: HeaderProps) {
             >
               Agent
             </button>
-          </div>
+          </div>}
           <div className="flex items-center gap-1 shrink-0">
             <div className="hidden items-center gap-2 pr-1 sm:flex">
               <span className="max-w-28 truncate text-xs text-gray-500 dark:text-gray-400" title={privateAccountName}>
@@ -322,7 +323,7 @@ export default function Header({ privateAccountName, onLogout }: HeaderProps) {
             </div>
           </div>
         </div>
-        <div className={`safe-area-x sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${appMode === 'gallery' && scrollDirection === 'down' ? 'max-h-0 opacity-0 pb-0' : 'max-h-20 opacity-100 pb-2'}`}>
+        {agentEnabled && <div className={`safe-area-x sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${appMode === 'gallery' && scrollDirection === 'down' ? 'max-h-0 opacity-0 pb-0' : 'max-h-20 opacity-100 pb-2'}`}>
           <div className="grid grid-cols-2 gap-1 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-gray-100/70 dark:bg-white/[0.04] p-1 mx-2">
             <button
               type="button"
@@ -339,7 +340,7 @@ export default function Header({ privateAccountName, onLogout }: HeaderProps) {
               Agent
             </button>
           </div>
-        </div>
+        </div>}
       </header>
       
       {/* Hint for sliding down */}
@@ -351,11 +352,11 @@ export default function Header({ privateAccountName, onLogout }: HeaderProps) {
 
       <div className={`safe-area-top invisible pointer-events-none transition-all duration-300 ease-in-out ${appMode === 'agent' && !agentMobileHeaderVisible ? 'max-h-0 sm:max-h-[500px] opacity-0 sm:opacity-100 overflow-hidden sm:overflow-visible' : 'max-h-[500px] opacity-100'}`} aria-hidden="true">
         <div className="safe-header-inner" />
-        <div className={`safe-area-x sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${appMode === 'gallery' && scrollDirection === 'down' ? 'max-h-0 pb-0' : 'max-h-20 pb-2'}`}>
+        {agentEnabled && <div className={`safe-area-x sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${appMode === 'gallery' && scrollDirection === 'down' ? 'max-h-0 pb-0' : 'max-h-20 pb-2'}`}>
           <div className="p-1">
             <div className="py-1.5 text-sm">占位</div>
           </div>
-        </div>
+        </div>}
       </div>
       {showHelp && <HelpModal appMode={appMode} isFavoriteCollectionOverview={appMode === 'gallery' && filterFavorite && !activeFavoriteCollectionId} onClose={() => setShowHelp(false)} />}
     </>

@@ -31,6 +31,7 @@ export default function App() {
   const filterFavorite = useStore((s) => s.filterFavorite)
   const activeFavoriteCollectionId = useStore((s) => s.activeFavoriteCollectionId)
   const [privateAccount, setPrivateAccount] = useState(() => getPrivateSessionAccount())
+  const privateAccountSupportsAgent = privateAccount?.apiMode === 'responses'
   useDockerApiUrlMigrationNotice()
   useGlobalClickSuppression()
 
@@ -103,6 +104,9 @@ export default function App() {
 
     const state = useStore.getState()
     state.setSettings(createPrivateAccountSettings(privateAccount, state.settings))
+    if (privateAccount.apiMode !== 'responses' && state.appMode === 'agent') {
+      state.setAppMode('gallery')
+    }
   }, [privateAccount])
 
   useEffect(() => {
@@ -133,12 +137,13 @@ export default function App() {
     <>
       <Header
         privateAccountName={privateAccount.name}
+        agentEnabled={privateAccountSupportsAgent}
         onLogout={() => {
           clearPrivateSessionUsername()
           setPrivateAccount(null)
         }}
       />
-      {appMode === 'agent' ? (
+      {appMode === 'agent' && privateAccountSupportsAgent ? (
         <AgentWorkspace />
       ) : (
         <main data-home-main data-drag-select-surface className="pb-48">
